@@ -1,0 +1,89 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "1. Εφαρμογή (Bluetooth)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "ble_proximity",
+      "args": ["--autostart"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "2. Εφαρμογή (προσομοίωση, χωρίς Bluetooth)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "ble_proximity",
+      "args": ["--simulate", "--autostart", "--track", "00:00:5E:00:53:01"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "3. Λίστα κοντινών συσκευών BLE",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "ble_proximity.record",
+      "args": ["--list", "--seconds", "10"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "4. Καταγραφή πειράματος (60 s)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "ble_proximity.record",
+      "args": [
+        "--target", "${input:target}",
+        "--distance", "${input:distance}",
+        "--condition", "${input:condition}",
+        "--rep", "${input:rep}"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "5. Ανάλυση πειραμάτων",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "ble_proximity.analyze",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "6. Έλεγχοι (unit tests)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "unittest",
+      "args": ["discover", "-s", "tests", "-t", ".", "-v"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "target",
+      "type": "promptString",
+      "description": "Διεύθυνση (AA:BB:CC:DD:EE:FF) ή μέρος του ονόματος της συσκευής δοκιμών"
+    },
+    {
+      "id": "distance",
+      "type": "pickString",
+      "description": "Απόσταση (m)",
+      "options": ["1", "2", "3", "5"]
+    },
+    {
+      "id": "condition",
+      "type": "pickString",
+      "description": "Συνθήκη",
+      "options": ["los", "obstacle", "orient90", "orient180"]
+    },
+    {
+      "id": "rep",
+      "type": "pickString",
+      "description": "Επανάληψη",
+      "options": ["1", "2", "3"]
+    }
+  ]
+}
